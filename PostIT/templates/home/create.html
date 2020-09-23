@@ -1,0 +1,8 @@
+{% extends 'home/notas.html' %} {% load static %} {% block content1 %}
+<p></p>
+{% endblock %} {% block content2 %}
+<form method="POST">
+  {% csrf_token %}{{newnote.as_p}} {{user.get_username}}
+  <button type="submit" class="submit-btn">create</button>
+</form>
+{% endblock %}.
