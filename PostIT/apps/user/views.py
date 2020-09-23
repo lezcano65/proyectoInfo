@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from apps.user.models import *
-from apps.user import *
+from .models import *
 from .forms import registernota
 
 # Create your views here.
@@ -28,24 +27,22 @@ def edit(request):
     return render(request, "home/edit.html", ctx)
 
 
+@login_required
 def newnota(request):
     if request.method == "POST":
         current_user = request.user
-        print(current_user.id, " primero")
+        user = User.objects.get(id=current_user.id)
         newnote = registernota(request.POST)
         model = nota
-        model.titulo = newnote.cleaned_data["titulo"]
-        model.descripcion = newnote.cleaned_data["descripcion"]
-        model.check = newnote.cleaned_data["check"]
-        model.fecha = newnote.cleaned_data["fecha"]
-        model.color = newnote.cleaned_data["color"]
         if newnote.is_valid():
-            current_user = request.user
-            print(current_user.id)
-            grabar = nota(id_usuario=current_user.id, titulo=model.titulo, descripcion=model.descripcion,
-                          check=model.check, fecha=model.fecha, color=model.color)  # instanciar el modelo
+            model.titulo = newnote.cleaned_data["titulo"]
+            model.descripcion = newnote.cleaned_data["descripcion"]
+            model.fecha = newnote.cleaned_data["fecha"]
+            model.color = newnote.cleaned_data["color"]
+            grabar = nota(id_usuario=user, titulo=model.titulo, fecha=model.fecha,
+                          descripcion=model.descripcion, color=model.color)
             grabar.save()
-            return mostrar_notas(request, User)
+            return mostrar_notas(request, user)
         else:
             return redirect('home')
     else:

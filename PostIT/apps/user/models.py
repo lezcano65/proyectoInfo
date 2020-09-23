@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime, date
 from django.contrib.auth.models import User
 # Create your models here.
 
@@ -11,7 +10,6 @@ class nota(models.Model):
     titulo = models.CharField(max_length=60)
     descripcion = models.TextField(max_length=400)
     fecha = models.DateField()
-    check = models.BooleanField(default=False, verbose_name="realizado")
     color = models.CharField(max_length=60)
 
     def __str__(self):
