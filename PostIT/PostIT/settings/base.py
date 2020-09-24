@@ -29,8 +29,8 @@ SECRET_KEY = 'n!qm0$81_*fkuipsnmkb9#-zp8vyc!5t76g#)95qb(5j_)1!=2'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-LOGIN_REDIRECT_URL = 'home/'
-LOGOUT_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = ''
+LOGOUT_REDIRECT_URL = 'home/'
 
 # Application definition
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.login',
     'apps.user',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

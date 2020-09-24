@@ -64,6 +64,7 @@ h3 {
 #titulo {
   margin-top: 18px;
   left: 0px;
+  justify-content: center;
 }
 
 #titulocard {
@@ -86,9 +87,6 @@ li {
   font-size: 25px;
 }
 
-#cuerpo {
-  justify-content: center;
-}
 
 #add {
   margin-left: 10px;
@@ -100,4 +98,24 @@ li {
 
 #color {
   text-align: right;
+}
+
+#contentCard {
+  width: 18rem;
+}
+
+#buttons {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#texto {
+  font-size: 1.2em;
+  text-align: center;
+  margin: 10px;
+}
+
+#fecha {
+  font-size: 1.2em;
+  text-align: center;
 }

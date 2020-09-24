@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+#from django.contrib import messages
+
 from apps.user.views import mostrar_notas
-from apps.user.models import *
-from apps.user.forms import *
+from apps.user.models import nota
+from apps.user.forms import registerUser, LoginForm, registernota
 
 # Create your views here.
 
 
-def index(request):
+def indexPage(request):
     if request.method == "POST":
         log_in = LoginForm(request.POST)
         model_username = request.POST.get('username')
@@ -22,9 +24,8 @@ def index(request):
                 login(request, user)
                 current_user = request.user
                 print(current_user.id)
-                valor = current_user
                 user = User.objects.get(username=model_username)
-                return mostrar_notas(request, user)
+                return mostrar_notas(request)
             else:
                 #messages.success(request, 'data error :')
                 return redirect('index')
@@ -46,9 +47,6 @@ def index(request):
             user.save()
             #messages.success(request, 'New user create whit name '+model.username)
             return redirect('index')
-        else:
-            pass
-            #messages.success(request, 'password not equal '+model.username)
     else:
         newUser = registerUser()
         log_in = LoginForm()
@@ -56,7 +54,6 @@ def index(request):
 
 
 @login_required
-def logout(request):
+def logoutUser(request):
     logout(request)
-    #messages.success(request, 'logout succes ')
-    return('index')
+    return redirect('index')

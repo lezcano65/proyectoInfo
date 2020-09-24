@@ -1,5 +1,48 @@
 {% extends 'home/notas.html' %} {% load static %} {% block content1 %}
-<p>Edit</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm" id="card">
+            <div class="card text-white bg-dark mb-3" id="contentCard">
+                <div class="card-header" id="titulocard">{{nota.titulo}}</div>
+                <div class="card-header" id="fecha">{{nota.fecha}}</div>
+                <div class="card-body" id="fondo" onclick="changeColor()">
+                    <div id="color">
+                        <p>Color:
+                            <input name="MyColorPicker" type="color" id="MyColorPicker" /></p>
+                    </div>
+
+                    <p class="card-text" id="texto">{{nota.descripcion}}</p>
+                    <div id="elementId" onclick="fn_name()">
+                        <div id="Myelement" onclick="changeColor()">
+                        </div>
+                    </div>
+                    <div id="buttons">
+                        <a href="#" class="btn btn-success active" role="button" aria-pressed="true">Save</a>
+                        <a href="#" class="btn btn-danger active" role="button" aria-pressed="true">Cancel</a>
+                        <!-- <input
+                  type="checkbox"
+                  id="vehicle1"
+                  name="vehicle1"
+                  value="Bike"
+                />
+                <label for="vehicle1">Hecho: {{nota.check}}</label><br /> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
 {% endblock %} {% block content2 %}
-<p>Edit2</p>
+
 {% endblock %}.
