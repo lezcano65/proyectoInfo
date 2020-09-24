@@ -39,7 +39,7 @@ def newnota(request):
             model.descripcion = newnote.cleaned_data["descripcion"]
             model.fecha = newnote.cleaned_data["fecha"]
             model.color = newnote.cleaned_data["color"]
-            grabar = nota(id_usuario=user, titulo=model.titulo, fecha=model.fecha,
+            grabar = nota(id_usuario=user, titulo=model.titulo, check=False, fecha=model.fecha,
                           descripcion=model.descripcion, color=model.color)
             grabar.save()
             return mostrar_notas(request, user)

@@ -31,6 +31,7 @@ class registerUser(forms.Form):
 
 
 class registernota(forms.Form):
+    check = forms.BooleanField(widget=forms.CheckboxInput(), initial=False)
     fecha = forms.DateField(widget=forms.DateTimeInput)
     titulo = forms.CharField(max_length=60, widget=forms.TextInput(
         attrs={"placeholder": "titulo"}))
