@@ -1,0 +1,47 @@
+{% extends 'login/index.html' %}
+<!DOCTYPE html>
+{% load static %} {% block cabeza %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="{% static 'css/style_1.css' %}" />
+    <title>Form Change Email</title>
+  </head>
+  {% endblock %} {% block cuerpo %}
+  <body>
+    <section class="form-new-email">
+      <h4>Change Email</h4>
+      <input
+        class="controls"
+        type="email"
+        name="correo"
+        id="correo"
+        placeholder="Enter current email"
+      />
+      <input
+        class="controls"
+        type="password"
+        name="correo"
+        id="correo"
+        placeholder="Enter the new email"
+      />
+      <input
+        class="controls"
+        type="password"
+        name="correo"
+        id="correo"
+        placeholder="Repeat the new email"
+      />
+      <!-- <p>Estoy de acuerdo con <a href="#">Terminos y Condiciones</a></p> -->
+
+      <div id="butons">
+        <input class="botons" type="submit" value="Save" />
+        <input class="botons" type="submit" value="Back" />
+      </div>
+      <!-- <p><a href="#">¿Ya tengo Cuenta?</a></p> -->
+    </section>
+  </body>
+</html>
+{% endblock %}

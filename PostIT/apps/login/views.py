@@ -1,12 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 #from django.contrib import messages
 
 from apps.user.views import mostrar_notas
 from apps.user.models import nota
 from apps.user.forms import registerUser, LoginForm, registernota
+
 
 # Create your views here.
 
@@ -57,3 +59,47 @@ def indexPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('index')
+
+
+@login_required
+def settingsUser(request):
+    current_user = request.user
+    print(current_user.id)
+    ctx = {}
+    return render(request, 'login/settings.html', ctx)
+
+
+@login_required  # permiso para usuario
+def changeEmail(request):
+    if request.method == "POST":  # post input para views
+        current_user = request.user  # instanciando el usurio logueado
+        # busqueda a la base de datos del usuario
+        user = User.objects.get(id=current_user.id)
+        print(user.id)
+        newUser = changeEmail(request.POST)  # instanciar el formulario
+        model = User  # instanciar el modelo de User
+        if newUser.is_valid():
+            model.username = user.username
+            model.email = newUser.cleaned_data["email"]
+            model.email1 = newUser.cleaned_data["email1"]
+            model.email2 = newUser.cleaned_data["email2"]
+            model.password = newUser.cleaned_data["password"]
+            grabar = User(id=user.id, username=model.username, email=model.email,
+                          password=model.password)
+            if (model.email1 == model.email2):
+                grabar.save() #
+
+    else:
+        newUser = changeEmail()
+    return render(request, 'login/changeEmail.html', {})
+
+
+@login_required
+def changeUsername(request):
+    pass
+    return redirect()
+
+
+@login_required
+def changePass(request):
+    return render(request, 'login/changePass.html', {})

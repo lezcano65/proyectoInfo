@@ -10,12 +10,15 @@
       href="https://fonts.googleapis.com/css2?family=Libre+Franklin&amp;display=swap"
       rel="stylesheet"
     />
+    {% block cabeza %}
     <title>Login and Registration - PostIt</title>
+    {% endblock %}
   </head>
   <body>
     <div class="container">
       <div id="form-box" class="form-box">
         <h1 id="title">PostIT</h1>
+        {% block cuerpo %}
         <div class="button-box">
           <div id="btn"></div>
           <!--
@@ -28,7 +31,7 @@
             class="toogle-btn"
             onclick="login()"
           >
-            Ingresar
+            Log in
           </button>
           <button
             id="register-btn"
@@ -36,19 +39,22 @@
             class="toogle-btn"
             onclick="register()"
           >
-            Registrarme
+            Sign up
           </button>
         </div>
 
         <form method="POST" id="login" class="input-group">
           {% csrf_token %} {{log_in.username}} {{log_in.password}}
-          <button type="submit" class="submit-btn">Ingresar a mi cuenta</button>
+          <button type="submit" class="submit-btn">Enter account</button>
         </form>
         <form action="" method="POST" id="register" class="input-group">
           {% csrf_token %} {{newUser.username}}
           {{newUser.email}}{{newUser.password1}}{{newUser.password2}}
-          <button type="submit" class="submit-btn">Completar registro</button>
+          <button type="submit" class="submit-btn">
+            Complete registration
+          </button>
         </form>
+        {% endblock %}
       </div>
     </div>
 

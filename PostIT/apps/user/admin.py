@@ -8,7 +8,6 @@ class notaAdmin(admin.ModelAdmin):
     list_display = ("titulo", "fecha")
     list_filter = (
         "fecha",
-        "check",
     )
     date_hierarchy = "fecha"
 

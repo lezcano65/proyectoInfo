@@ -23,22 +23,48 @@ def mostrar_notas(request):
         print("paso 3")
     except:
         todos: ""
-
     ctx = {"user": user, "notas": todos, "filtro": MyFilter}
     return render(request, "home/notas.html", ctx)
 
 
 @login_required
-def edit(request, notuli):
-    print(notuli.id)
-    ctx = {}
-    return render(request, "home/edit.html", ctx)
+def edit(request, pk):
+    print(pk)
+    buscar = nota.objects.get(id=pk)
+    print("antes del post")
+    if request.method == "POST":
+        print("post")
+        current_user = request.user
+        user = User.objects.get(id=current_user.id)
+        newnote = registernota(request.POST)
+        model = nota
+        if newnote.is_valid():
+            print("entro")
+            model.titulo = newnote.cleaned_data["titulo"]
+            model.descripcion = newnote.cleaned_data["descripcion"]
+            model.fecha = newnote.cleaned_data["fecha"]
+            model.color = newnote.cleaned_data["color"]
+            grabar = nota(id=buscar.id, id_usuario=user, titulo=model.titulo, fecha=model.fecha,
+                          descripcion=model.descripcion, color=model.color)
+            grabar.save()
+            return mostrar_notas(request)
+        else:
+            return redirect('home')
+    else:
+        print("enviar formulario")
+        newnote = registernota()
+    return render(request, "home/edit.html", {"nota": newnote})
 
 
 @login_required
-def deleteNote(request, notuli):
-    print(notuli.id)
-    ctx = {}
+def deleteNote(request, pk):
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
+    print(pk)
+    buscar = nota.objects.get(id=pk)
+    print(nota.titulo)
+    print(nota.descripcion)
+    ctx = {"user": user}
     return render(request, "home/notas.html", ctx)
 
 
@@ -54,20 +80,21 @@ def newnota(request):
             model.descripcion = newnote.cleaned_data["descripcion"]
             model.fecha = newnote.cleaned_data["fecha"]
             model.color = newnote.cleaned_data["color"]
-            grabar = nota(id_usuario=user, titulo=model.titulo, check=True, fecha=model.fecha,
+            grabar = nota(id_usuario=user, titulo=model.titulo, fecha=model.fecha,
                           descripcion=model.descripcion, color=model.color)
             grabar.save()
-            return mostrar_notas(request, user)
+            return mostrar_notas(request)
         else:
-            return redirect('home')
+            return redirect('home', {"newnote": newnote})
     else:
         newnote = registernota()
-    return render(request, "home/create.html", {"newnote": newnote})
+    return render(request, 'home', {"newnote": newnote})
 
 
 @login_required
 def searchNote(request):
     current_user = request.user
+    user = User.objects.get(id=current_user.id)
     print(current_user.id)
     buscale = request.Search
     print(buscale)
@@ -76,7 +103,9 @@ def searchNote(request):
         notuli = nota.objects.filter(titulo=buscale)
         ctx = {"user": current_user, "notas": notuli}
         return render(request, "home/notas.html", ctx)
-    return render(request, "home/notas.html", ctx)
+    else:
+        ctx = {"user": current_user, "notas": notuli}
+    return mostrar_notas(request)
 
 
 @login_required
@@ -101,7 +130,7 @@ def configuracion(request):
                 user.is_active = True
                 user.set_password(model.password1)
                 user.save()
-                return mostrar_notas(request, user)
+                return mostrar_notas(request)
             else:
                 print("contraseña no coincide")
         else:

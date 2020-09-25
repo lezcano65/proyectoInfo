@@ -75,6 +75,11 @@ html {
   transition: 0.5s;
 }
 
+.clearfix-padding {
+  clear: both;
+  padding: 2%;
+}
+
 .input-field {
   width: 100%;
   padding: 10px 0;
