@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from apps.user.views import mostrar_notas
 from apps.user.models import nota
 from apps.user.forms import registerUser, LoginForm, registernota
+from .forms import changeEmail, chageUsername, changePass
 
 
 # Create your views here.
@@ -64,34 +65,34 @@ def logoutUser(request):
 @login_required
 def settingsUser(request):
     current_user = request.user
-    print(current_user.id)
-    ctx = {}
+    print("hola")
+    user = User.objects.get(id=current_user.id)
+    print(current_user.id, "aksjdl")
+    ctx = {"user": user}
     return render(request, 'login/settings.html', ctx)
 
 
 @login_required  # permiso para usuario
 def changeEmail(request):
+    current_user = request.user  # instanciando el usurio logueado
+    # busqueda a la base de datos del usuario
+    user = User.objects.get(id=current_user.id)
+    print(user.id)
     if request.method == "POST":  # post input para views
-        current_user = request.user  # instanciando el usurio logueado
-        # busqueda a la base de datos del usuario
-        user = User.objects.get(id=current_user.id)
-        print(user.id)
-        newUser = changeEmail(request.POST)  # instanciar el formulario
-        model = User  # instanciar el modelo de User
-        if newUser.is_valid():
-            model.username = user.username
-            model.email = newUser.cleaned_data["email"]
-            model.email1 = newUser.cleaned_data["email1"]
-            model.email2 = newUser.cleaned_data["email2"]
-            model.password = newUser.cleaned_data["password"]
-            grabar = User(id=user.id, username=model.username, email=model.email,
-                          password=model.password)
-            if (model.email1 == model.email2):
-                grabar.save() #
-
+        # print(request.POST['correo'])
+        email1 = request.POST["correo1"]
+        email2 = request.POST["correo2"]
+        print(request.POST["correo1"])
+        print("entro al post")
+        grabar = User(id=user.id, username=user.username, email=email1,
+                      password=password)
+        if (email1 == email2):
+            grabar.save()  # re graba la base de datos
+        else:
+            print("email diferentes")
     else:
-        newUser = changeEmail()
-    return render(request, 'login/changeEmail.html', {})
+        redirect('changeEmail')
+    return render(request, 'login/changeEmail.html', {"usuario": user})
 
 
 @login_required

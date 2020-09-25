@@ -88,7 +88,7 @@ def newnota(request):
             return redirect('home', {"newnote": newnote})
     else:
         newnote = registernota()
-    return render(request, 'home', {"newnote": newnote})
+    return render(request, 'home/create.html', {"newnote": newnote})
 
 
 @login_required

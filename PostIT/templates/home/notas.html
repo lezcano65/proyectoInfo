@@ -43,8 +43,8 @@
 
   <form action="home" class="form-inline my-2 my-lg-0" id="search" method="get">
     {% csrf_token %}{{filtro.form}}
-    <button class="btn btn-success my-2 my-sm-0" type="submit" id="botonBuscar" >Search</button>
-    <a href="{% url 'create' %}" class="btn btn-primary active" role="button" aria-pressed="true" id="add" >ADD</a>
+    <button class="btn btn-success my-2 my-sm-0" type="submit" id="botonBuscar">Search</button>
+    <a href="{% url 'create' %}" class="btn btn-primary active" role="button" aria-pressed="true" id="add">ADD</a>
     {% endblock %}
     {% block content2 %}
   </form>
@@ -61,8 +61,10 @@
               </div>
             </div>
             <div id="buttons">
-              <a href="{% url 'edit' nota.id %}" class="btn btn-warning active" role="button" aria-pressed="true">Update</a>
-              <a href="{% url 'delete' nota.id %}" class="btn btn-danger active" role="button" aria-pressed="true">Delete</a>
+              <a href="{% url 'edit' nota.id %}" class="btn btn-warning active" role="button"
+                aria-pressed="true">Update</a>
+              <a href="{% url 'delete' nota.id %}" class="btn btn-danger active" role="button"
+                aria-pressed="true">Delete</a>
               <!-- <input
                           type="checkbox"
                           id="vehicle1"
@@ -94,4 +96,5 @@
 <footer class="bg-dark container-fluid text-center">
   <p>INFORMATORIO 2020 © </p>
 </footer>
+
 </html>

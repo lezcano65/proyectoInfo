@@ -6,45 +6,39 @@
       <div class="card text-white bg-dark mb-3" id="contentCard">
         <form action="" method="POST" id="login" class="input-group">
 
-            {% csrf_token %}
-            <div class="card-header" id="titulocard">{{nota.titulo}}</div>
-            <div class="card-header" id="fecha">{{nota.fecha}}</div>
-            <div class="card-body" id="fondo" onclick="changeColor()">
+          {% csrf_token %}
+          <div class="card-header" id="titulocard">{{nota.titulo}}</div>
+          <div class="card-header" id="fecha">{{nota.fecha}}</div>
+          <div class="card-body" id="fondo" onclick="changeColor()">
             <div id="color">
-                <p>
+              <p>
                 Color:{{nota.color}}
                 <input name="MyColorPicker" type="color" id="MyColorPicker" />
-                </p>
+              </p>
             </div>
 
             <p class="card-text" id="texto">{{nota.descripcion}}</p>
             <div id="elementId" onclick="fn_name()">
-                <div id="Myelement" onclick="changeColor()"></div>
+              <div id="Myelement" onclick="changeColor()"></div>
             </div>
             <div id="buttons">
-            <button type="submit" class="submit-btn">SAVE</button>
+              <button type="submit" class="submit-btn">SAVE</button>
 
         </form>
 
-            <a
-              href="{% url 'home' %}"
-              class="btn btn-danger active"
-              role="button"
-              aria-pressed="true"
-              >Cancel</a
-            >
-            <!-- <input
+        <a href="{% url 'home' %}" class="btn btn-danger active" role="button" aria-pressed="true">Cancel</a>
+        <!-- <input
                   type="checkbox"
                   id="vehicle1"
                   name="vehicle1"
                   value="Bike"
                 />
                 <label for="vehicle1">Hecho: {{nota.check}}</label><br /> -->
-          </div>
-        </div>
       </div>
     </div>
   </div>
+</div>
+</div>
 </div>
 
 {% endblock %} {% block content2 %} {% endblock %}.

@@ -17,6 +17,10 @@ class changeEmail(forms.Form):
         "class": "input-field", "placeholder": "password"
     }))
 
+    class Meta():
+        model = User
+        filter = ['username', 'email', 'password1', 'password2']
+
 
 class changePass(forms.Form):
     password = forms.CharField(max_length=60, widget=forms.PasswordInput(attrs={
@@ -29,6 +33,10 @@ class changePass(forms.Form):
         "class": "input-field", "placeholder": "password"
     }))
 
+    class Meta():
+        model = User
+        filter = ['username', 'email', 'password1', 'password2']
+
 
 class chageUsername(forms.Form):
     username = forms.CharField(max_length=60, widget=forms.TextInput(
@@ -37,3 +45,7 @@ class chageUsername(forms.Form):
         attrs={"class": "input-field", "placeholder": "username"}))
     username2 = forms.CharField(max_length=60, widget=forms.TextInput(
         attrs={"class": "input-field", "placeholder": "username"}))
+
+    class Meta():
+        model = User
+        filter = ['username', 'email', 'password1', 'password2']

@@ -4,31 +4,25 @@
 <p></p>
 {% endblock %} {% block cuerpo %}
 <div class="clearfix-padding">
-  <form
-    action="{% url 'changeUsername' %"
+  <form action="{% url 'changeUsername' %"
     method="POST"
     id="Change_username"
     class="input-group"
   >
   {% csrf_token %}
-    <button type="submit" class="submit-btn">Change username</button>
+    <button type=" submit" class="submit-btn">Change username</button>
   </form>
 </div>
 <div class="clearfix-padding">
-    <form
-    action="{% url 'changeEmail' %}"
-    method="POST"
-    id="Change_email"
-    class="input-group1"
-    >
+  <form action="{% url 'changeEmail' %}" method="POST" id="Change_email" class="input-group1">
     {% csrf_token %}
     <button type="submit" class="submit-btn">Change email</button>
-    </form>
+  </form>
 </div>
 <div class="clearfix-padding"></div>
-    <form action="{% url 'changePass' %}" method="POST" id="Change_pass" class="input-group2">
-        {% csrf_token %}
-    <button type="submit" class="submit-btn">Change password</button>
-    </form>
+<form action="{% url 'changePass' %}" method="POST" id="Change_pass" class="input-group2">
+  {% csrf_token %}
+  <button type="submit" class="submit-btn">Change password</button>
+</form>
 </div>
 {% endblock %}
