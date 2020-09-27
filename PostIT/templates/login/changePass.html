@@ -17,9 +17,12 @@
     <h4>Change Password</h4>
     <form action="" method="POST" id="change-pass" class="input-group">
       {% csrf_token %}
-      {{User.password}}
-      {{User.password2}}
-      {{User.password3}}
+      Old Paswword:
+      {{form.old_password}}
+      New Password:
+      {{form.new_password1}}
+      Repeat New Password:
+      {{form.new_password2}}
       <button type="submit" class="submit-btn">Save</button>
     </form>
     <div class="clearfix-padding">

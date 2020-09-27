@@ -1,7 +1,6 @@
 from django import forms
 from django.db import models
 from django.contrib.auth.forms import User
-from apps.user.forms import registerUser
 
 
 class changeEmailForm(forms.Form):
@@ -18,7 +17,7 @@ class changeEmailForm(forms.Form):
 
     class Meta():
         model = User
-        fields = ["email"]
+        filter = ["email"]
 
 
 class changePassForm(forms.Form):

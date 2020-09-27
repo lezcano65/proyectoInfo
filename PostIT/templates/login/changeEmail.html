@@ -23,8 +23,8 @@
       <button type="submit" class="submit-btn">Save</button>
     </form>
     <div class="clearfix-padding">
+      {% csrf_token %}
       <form action="{% url 'home' %}" method="POST" id="Change_email" class="input-group1">
-        {% csrf_token %}
         <button type="submit" class="submit-btn">Home</button>
       </form>
     </div>

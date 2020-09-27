@@ -46,7 +46,7 @@ def edit(request, pk):
             grabar.save()
             return mostrar_notas(request)
         else:
-            return redirect('home')
+            return redirect('edit/',pk)
     else:
         print("enviar formulario")
         newnote = registernota(instance=buscar)
