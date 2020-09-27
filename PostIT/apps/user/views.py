@@ -55,14 +55,16 @@ def edit(request, pk):
 
 @login_required
 def deleteNote(request, pk):
-    current_user = request.user
-    user = User.objects.get(id=current_user.id)
-    print(pk)
     buscar = nota.objects.get(id=pk)
-    print(nota.titulo)
-    print(nota.descripcion)
-    ctx = {"user": user}
-    return render(request, "home/notas.html", ctx)
+    if request.method == "POST":
+        grabar = nota(id=buscar.id, id_usuario=buscar.id_usuario, titulo=buscar.titulo, fecha=buscar.fecha,
+                      descripcion=buscar.descripcion, color=buscar.color)
+        grabar.delete()
+        return mostrar_notas(request)
+    else:
+        print("enviar formulario")
+        newnote = registernota(instance=buscar)
+    return render(request, "home/delete.html", {"nota": newnote})
 
 
 @login_required
