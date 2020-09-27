@@ -28,7 +28,8 @@ class registerUser(forms.Form):
 
     class Meta():
         model = User
-        filter = ['username', 'email', 'password1', 'password2']
+        filter = ['username', 'email', 'password1',
+                  'password2',]
 
 
 class registernota(forms.Form):

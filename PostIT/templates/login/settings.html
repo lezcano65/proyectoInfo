@@ -1,15 +1,16 @@
 {% extends 'login/index.html' %}
 <!DOCTYPE html>
 {% load static %} {% block cabeza %}
-<p></p>
 {% endblock %} {% block cuerpo %}
 <div class="clearfix-padding">
-  <form action="{% url 'changeUsername' %"
-    method="POST"
-    id="Change_username"
-    class="input-group"
-  >
-  {% csrf_token %}
+  <form action="{% url 'home' %}" method="POST" id="Change_settings" class="input-group1">
+    {% csrf_token %}
+    <button type="submit" class="submit-btn">HOME</button>
+  </form>
+</div>
+<div class="clearfix-padding">
+  <form action="{% url 'changeUsername' %}" method="POST" id="Change_username" class="input-group3">
+    {% csrf_token %}
     <button type=" submit" class="submit-btn">Change username</button>
   </form>
 </div>

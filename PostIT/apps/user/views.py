@@ -16,11 +16,8 @@ def mostrar_notas(request):
         current_user = request.user
         user = User.objects.get(id=current_user.id)
         todos = nota.objects.filter(id_usuario=user.id).order_by("fecha")
-        print("paso 1")
         MyFilter = notaFilter(request.GET, queryset=todos)
-        print("paso 2")
         todos = MyFilter.qs
-        print("paso 3")
     except:
         todos: ""
     ctx = {"user": user, "notas": todos, "filtro": MyFilter}
@@ -95,11 +92,8 @@ def newnota(request):
 def searchNote(request):
     current_user = request.user
     user = User.objects.get(id=current_user.id)
-    print(current_user.id)
     buscale = request.Search
-    print(buscale)
     if buscale != None:
-        print(buscale)
         notuli = nota.objects.filter(titulo=buscale)
         ctx = {"user": current_user, "notas": notuli}
         return render(request, "home/notas.html", ctx)
@@ -108,12 +102,11 @@ def searchNote(request):
     return mostrar_notas(request)
 
 
-@login_required
+'''@login_required
 def configuracion(request):
     if request.method == "POST":
         current_user = request.user
         user = User.objects.get(id=current_user.id)
-        print(user.id)
         newUser = registerUser(request.POST)
         model = User
         if newUser.is_valid():
@@ -137,7 +130,7 @@ def configuracion(request):
             print("formulario invalido")
     else:
         newUser = registerUser()
-    return render(request, "home/settings.html", {'User': newUser})
+    return render(request, "home/settings.html", {'User': newUser})'''
 
 
 @login_required

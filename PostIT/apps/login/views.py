@@ -1,17 +1,17 @@
-from django.shortcuts import render, redirect, HttpResponse
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
+from django.contrib.auth.models import User
+from django.shortcuts import HttpResponse, redirect, render
 from django.urls import reverse_lazy
-#from django.contrib import messages
 
-from apps.user.views import mostrar_notas
+from apps.user.forms import LoginForm, registernota, registerUser
 from apps.user.models import nota
-from apps.user.forms import registerUser, LoginForm, registernota
-from .forms import changeEmail, chageUsername, changePass
+from apps.user.views import mostrar_notas
 
+from .forms import changeUsernameForm, changeEmailForm, changePassForm
 
-# Create your views here.
+# from django.contrib import messages
 
 
 def indexPage(request):
@@ -23,14 +23,13 @@ def indexPage(request):
             if log_in.is_valid():
                 user = authenticate(username=model_username,
                                     password=model_password)
-                #messages.success(request, 'User name is: '+model_username)
                 login(request, user)
+                # messages.success(request, 'User name is: '+model_username)
                 current_user = request.user
-                print(current_user.id)
                 user = User.objects.get(username=model_username)
                 return mostrar_notas(request)
             else:
-                #messages.success(request, 'data error :')
+                # messages.success(request, 'data error :')
                 return redirect('index')
     newUser = registerUser(request.POST)
     model = User
@@ -48,8 +47,13 @@ def indexPage(request):
             user.is_active = True
             user.set_password(model.password1)
             user.save()
-            #messages.success(request, 'New user create whit name '+model.username)
-            return redirect('index')
+            username = newUser.cleaned_data.get('username')
+            password = newUser.cleaned_data.get('password1')
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                return mostrar_notas(request)
+            # messages.success(request, 'New user create whit name '+model.username)
     else:
         newUser = registerUser()
         log_in = LoginForm()
@@ -65,42 +69,109 @@ def logoutUser(request):
 @login_required
 def settingsUser(request):
     current_user = request.user
-    print("hola")
     user = User.objects.get(id=current_user.id)
-    print(current_user.id, "aksjdl")
     ctx = {"user": user}
     return render(request, 'login/settings.html', ctx)
 
+ # permiso para usuario
 
-@login_required  # permiso para usuario
+
 def changeEmail(request):
-    current_user = request.user  # instanciando el usurio logueado
-    # busqueda a la base de datos del usuario
+    current_user = request.user
     user = User.objects.get(id=current_user.id)
-    print(user.id)
-    if request.method == "POST":  # post input para views
-        # print(request.POST['correo'])
-        email1 = request.POST["correo1"]
-        email2 = request.POST["correo2"]
-        print(request.POST["correo1"])
-        print("entro al post")
-        grabar = User(id=user.id, username=user.username, email=email1,
-                      password=password)
-        if (email1 == email2):
-            grabar.save()  # re graba la base de datos
+    if request.method == "POST":
+        newUser = changeEmailForm(request.POST)
+        model_email = request.POST.get("email")
+        model_email2 = request.POST.get('email2')
+        model_email3 = request.POST.get('email3')
+        if model_email2 != model_email:
+            grabar = User(id=user.id, username=user.username, email=model_email2,
+                          password=user.password)
+            if (model_email2 == model_email3):
+                grabar.save()
+                user = User.objects.get(id=current_user.id)
+                user.is_staff = True
+                user.is_active = True
+                user.set_password(user.password)
+                user.save()
+                return redirect('home')
+            else:
+                print("contraseña no coincide")
+                return redirect('changeEmail')
         else:
-            print("email diferentes")
+            print("formulario invalido")
+            return redirect('changeEmail')
     else:
-        redirect('changeEmail')
-    return render(request, 'login/changeEmail.html', {"usuario": user})
+        newUser = changeEmailForm()
+    return render(request, "login/changeEmail.html", {'User': newUser})
 
 
 @login_required
 def changeUsername(request):
-    pass
-    return redirect()
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
+    if request.method == "POST":
+        newUser = changeUsernameForm(request.POST)
+        model_username = request.POST.get("username")
+        model_username2 = request.POST.get('username2')
+        model_username3 = request.POST.get('username3')
+        if model_username2 != model_username:
+            grabar = User(id=user.id, username=model_username2, email=user.email,
+                          password=user.password)
+            if (model_username2 == model_username3):
+                grabar.save()
+                user = User.objects.get(id=current_user.id)
+                user.is_staff = True
+                user.is_active = True
+                user.set_password(user.password)
+                user.save()
+                user = authenticate(username=user.username,
+                                    password=user.password)
+                login(request, user)
+                return redirect('home')
+            else:
+                print("contraseña no coincide")
+                return redirect('changeUsername')
+        else:
+            print("formulario invalido")
+            return redirect('changeUsername')
+    else:
+        newUser = changeUsernameForm()
+    return render(request, "login/changeUsername.html", {'User': newUser})
 
 
 @login_required
 def changePass(request):
-    return render(request, 'login/changePass.html', {})
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
+    if request.method == "POST":
+        newUser = changePassForm(request.POST)
+        model_pass = request.POST.get("pass")
+        model_pass2 = request.POST.get('pass2')
+        model_pass3 = request.POST.get('pass3')
+        if model_pass2 != model_pass:
+            grabar = User(id=user.id, username=user.username, email=user.email,
+                          password=model_pass2)
+            if (model_pass2 == model_pass3):
+                grabar.save()
+                user = User.objects.get(id=current_user.id)
+                user.is_staff = True
+                user.is_active = True
+                user.set_password(user.password)
+                user.save()
+                username = user.username
+                password = model_pass2
+                user = authenticate(
+                    request, username=username, password=password)
+                if user:
+                    login(request, user)
+                    return mostrar_notas(request)
+            else:
+                print("contraseña no coincide")
+                return redirect('changePass')
+        else:
+            print("formulario invalido")
+            return redirect('changePass')
+    else:
+        newUser = changePassForm()
+    return render(request, "login/changePass.html", {'User': newUser})

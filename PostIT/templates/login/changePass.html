@@ -8,20 +8,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="{% static 'css/style_2.css' %}" />
-  <title>Form Change Email</title>
+  <title>Form Change Password</title>
 </head>
 {% endblock %} {% block cuerpo %}
 
 <body>
   <section class="form-new-pass">
-    <h4>Change Pass</h4>
-    <input class="controls" type="password" name="password" id="password" placeholder="Enter current password" />
-    <input class="controls" type="password1" name="password1" id="password1" placeholder="Enter the new password" />
-    <input class="controls" type="password2" name="password2" id="password2" placeholder="Repeat the new password" />
-
-    <div id="butons">
-      <input class="botons" type="submit" value="Save" />
-      <input class="botons" type="submit" value="Back" />
+    <h4>Change Password</h4>
+    <form action="" method="POST" id="change-pass" class="input-group">
+      {% csrf_token %}
+      {{User.password}}
+      {{User.password2}}
+      {{User.password3}}
+      <button type="submit" class="submit-btn">Save</button>
+    </form>
+    <div class="clearfix-padding">
+      <form action="{% url 'home' %}" method="POST" id="Change_password" class="input-group1">
+        {% csrf_token %}
+        <button type="submit" class="submit-btn">Home</button>
+      </form>
     </div>
   </section>
 </body>
