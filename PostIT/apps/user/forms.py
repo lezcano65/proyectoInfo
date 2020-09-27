@@ -2,6 +2,7 @@ from django import forms
 from django.db import models
 #from django.contrib.auth.models import User
 from django.contrib.auth.forms import User
+from .models import nota
 
 
 class LoginForm(forms.Form):
@@ -29,12 +30,16 @@ class registerUser(forms.Form):
     class Meta():
         model = User
         filter = ['username', 'email', 'password1',
-                  'password2',]
+                  'password2', ]
 
 
-class registernota(forms.Form):
+class registernota(forms.ModelForm):
     fecha = forms.DateField(widget=forms.DateTimeInput)
     titulo = forms.CharField(max_length=60, widget=forms.TextInput(
         attrs={"placeholder": "titulo"}))
     descripcion = forms.CharField(max_length=400, widget=forms.Textarea)
     color = forms.CharField(max_length=60, widget=forms.TextInput)
+
+    class Meta():
+        model = nota
+        fields = ('__all__')

@@ -49,7 +49,7 @@ def edit(request, pk):
             return redirect('home')
     else:
         print("enviar formulario")
-        newnote = registernota()
+        newnote = registernota(instance=buscar)
     return render(request, "home/edit.html", {"nota": newnote})
 
 
@@ -100,37 +100,6 @@ def searchNote(request):
     else:
         ctx = {"user": current_user, "notas": notuli}
     return mostrar_notas(request)
-
-
-'''@login_required
-def configuracion(request):
-    if request.method == "POST":
-        current_user = request.user
-        user = User.objects.get(id=current_user.id)
-        newUser = registerUser(request.POST)
-        model = User
-        if newUser.is_valid():
-            model.username = newUser.cleaned_data["username"]
-            model.email = newUser.cleaned_data["email"]
-            model.password1 = newUser.cleaned_data["password1"]
-            model.password2 = newUser.cleaned_data["password2"]
-            grabar = User(id=user.id, username=model.username, email=model.email,
-                          password=model.password1)
-            if (model.password1 == model.password2):
-                grabar.save()
-                user = User.objects.get(username=model.username)
-                user.is_staff = True
-                user.is_active = True
-                user.set_password(model.password1)
-                user.save()
-                return mostrar_notas(request)
-            else:
-                print("contraseña no coincide")
-        else:
-            print("formulario invalido")
-    else:
-        newUser = registerUser()
-    return render(request, "home/settings.html", {'User': newUser})'''
 
 
 @login_required
